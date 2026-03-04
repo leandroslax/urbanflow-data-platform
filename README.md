@@ -19,3 +19,4 @@ Processar dados de mobilidade urbana em tempo real para geração de indicadores
 ## Arquitetura
 
 Kafka → S3 (Raw) → Snowflake → dbt → Dashboard Geo
+# urbanflow-data-platform
