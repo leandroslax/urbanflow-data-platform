@@ -1,11 +1,23 @@
-# Terraform
-**/.terraform/
-*.tfstate
-*.tfstate.*
-*.tfvars
-*.tfvars.json
-crash.log
-crash.*.log
+# Python
+__pycache__/
+*.pyc
+.venv/
+.env
 
-# macOS
+# OS / IDE
 .DS_Store
+.vscode/
+.idea/
+
+# Spark / logs
+*.log
+logs/
+_checkpoint/
+checkpoints/
+spark-warehouse/
+
+# Data
+data/
+*.parquet
+*.csv
+*.jsonl

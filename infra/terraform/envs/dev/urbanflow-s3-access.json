@@ -1,0 +1,28 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ListBucketForUrbanflowPrefix",
+      "Effect": "Allow",
+      "Action": "s3:ListBucket",
+      "Resource": "arn:aws:s3:::urbanflow-datalake-dev-us-east-1-139961319000",
+      "Condition": {
+        "StringLike": {
+          "s3:prefix": [
+            "urbanflow/*"
+          ]
+        }
+      }
+    },
+    {
+      "Sid": "RWObjectsUnderUrbanflow",
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:PutObject",
+        "s3:DeleteObject"
+      ],
+      "Resource": "arn:aws:s3:::urbanflow-datalake-dev-us-east-1-139961319000/urbanflow/*"
+    }
+  ]
+}
