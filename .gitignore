@@ -1,23 +1,14 @@
-# Python
-__pycache__/
-*.pyc
-.venv/
-.env
+# Terraform
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+.terraform.lock.hcl
 
-# OS / IDE
+# Terragrunt (se usar)
+**/.terragrunt-cache/
+
+# Mac / IDE
 .DS_Store
 .vscode/
 .idea/
-
-# Spark / logs
-*.log
-logs/
-_checkpoint/
-checkpoints/
-spark-warehouse/
-
-# Data
-data/
-*.parquet
-*.csv
-*.jsonl
