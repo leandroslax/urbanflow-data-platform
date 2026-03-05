@@ -1,0 +1,12 @@
+version: 2
+
+sources:
+  - name: silver
+    database: URBANFLOW
+    schema: SILVER
+    tables:
+      - name: viagens
+      - name: gps
+      - name: incidentes
+      - name: clima
+      - name: trafego

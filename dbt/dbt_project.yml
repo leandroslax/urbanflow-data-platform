@@ -1,0 +1,18 @@
+name: urbanflow
+version: "1.0.0"
+config-version: 2
+profile: urbanflow
+
+model-paths: ["models"]
+macro-paths: ["macros"]
+seed-paths: ["seeds"]
+snapshot-paths: ["snapshots"]
+
+models:
+  urbanflow:
+    staging:
+      +materialized: view
+    intermediate:
+      +materialized: view
+    marts:
+      +materialized: table
