@@ -27,27 +27,21 @@ flowchart LR
     SN --> BI[Dashboards BI]
 
 ```
-Stack Tecnológica
+## Stack Tecnológica
 
 AWS
-
 Kafka / MSK
-
 Spark Structured Streaming
-
 Amazon S3
-
 Snowflake
-
 dbt
-
 Apache Airflow
-
 Terraform
-
 Amazon QuickSight
 
-Estrutura do Projeto
+## Estrutura do Projeto
+
+```text
 .
 ├── airflow
 │   └── dags
@@ -85,30 +79,25 @@ Estrutura do Projeto
 │   └── topics
 ├── scripts
 └── snowflake
-Execução da Plataforma
+```
 
-Iniciar Producer
+### Bloco 8 — execução
 
-Publicar eventos no Kafka
+```markdown
+## Execução da Plataforma
 
-Spark Streaming grava dados na camada Bronze
+1. Iniciar Producer
+2. Publicar eventos no Kafka
+3. Spark Streaming grava dados na camada Bronze
+4. Processos Silver tratam e padronizam os dados
+5. Processos Gold geram datasets analíticos
+6. Snowflake consome dados do Data Lake
+7. QuickSight gera dashboards
 
-Processos Silver tratam e padronizam os dados
+## Casos de Uso
 
-Processos Gold geram datasets analíticos
-
-Snowflake consome dados do Data Lake
-
-QuickSight gera dashboards
-
-Casos de Uso
-
-identificar regiões com maior congestionamento
-
-analisar horários de pico
-
-medir impacto de clima no trânsito
-
-monitorar incidentes urbanos
-
-analisar tempo médio de viagens
+- identificar regiões com maior congestionamento
+- analisar horários de pico
+- medir impacto de clima no trânsito
+- monitorar incidentes urbanos
+- analisar tempo médio de viagens
