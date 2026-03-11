@@ -6,5 +6,5 @@ sources:
     schema: GOLD
     tables:
       - name: VIAGENS_RESUMO_HORA
-      - name: CLIMA_RESUMO_HORA
       - name: TRAFEGO_RESUMO_HORA
+      - name: CLIMA_RESUMO_HORA
