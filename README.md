@@ -132,7 +132,7 @@ Infraestrutura
 
 ## Casos de Uso
 
-- dentificar regiões com maior congestionamento urbano
+- identificar regiões com maior congestionamento urbano
 - analisar horários de pico
 - medir impacto de clima no trânsito
 - monitorar incidentes urbanos
