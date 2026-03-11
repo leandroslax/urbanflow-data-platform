@@ -124,11 +124,12 @@ Infraestrutura
 
 1. Iniciar Python Producer
 2. Publicar eventos no Kafka
-3. Spark Streaming grava dados na camada Bronze
+3. Spark Structured Streaming grava dados na camada Bronze
 4. Processos Silver tratam e padronizam os dados
 5. Processos Gold geram datasets analíticos
 6. Snowflake consome dados do Data Lake
-7. QuickSight gera dashboards
+7. dbt executa transformações analíticas no Data Warehouse
+8. QuickSight gera dashboards
 
 ## Casos de Uso
 
