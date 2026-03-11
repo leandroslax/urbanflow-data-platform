@@ -1,0 +1,11 @@
+USE WAREHOUSE URBANFLOW_WH;
+USE DATABASE URBANFLOW;
+USE SCHEMA GOLD;
+
+CREATE OR REPLACE VIEW MART_VIAGENS_DIARIAS AS
+SELECT
+    DATE(gold_process_ts) AS data,
+    SUM(qtd_viagens_distintas) AS total_viagens,
+    SUM(preco_total) AS faturamento
+FROM VIAGENS_RESUMO_HORA
+GROUP BY data;

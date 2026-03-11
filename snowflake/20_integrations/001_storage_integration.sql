@@ -1,0 +1,8 @@
+CREATE OR REPLACE STORAGE INTEGRATION URBANFLOW_S3_INT
+  TYPE = EXTERNAL_STAGE
+  STORAGE_PROVIDER = S3
+  ENABLED = TRUE
+  STORAGE_AWS_ROLE_ARN = 'arn:aws:iam::139961319000:role/urbanflow-snowflake-s3-role'
+  STORAGE_ALLOWED_LOCATIONS = (
+    's3://urbanflow-datalake-dev-us-east-1-139961319000/urbanflow/gold/'
+  );
