@@ -23,7 +23,8 @@ flowchart LR
     G --> S3G[S3 Gold]
     S3G --> SN[Snowflake]
     SN --> BI[Dashboards BI]
-
+    
+---
 
 # 4️⃣ Pipeline Bronze → Silver → Gold
 
