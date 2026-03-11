@@ -1,9 +1,2 @@
-select
-  weather_id,
-  city,
-  region,
-  temperature_c,
-  rain_mm,
-  wind_kmh,
-  event_ts
-from {{ source('silver','clima') }}
+select *
+from {{ source('urbanflow_gold','CLIMA_RESUMO_HORA') }}

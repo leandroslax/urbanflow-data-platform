@@ -1,10 +1,15 @@
 select
-  trip_id,
-  city,
-  region,
-  start_ts,
-  end_ts,
-  driver_id,
-  passenger_id,
-  event_ts
-from {{ source('silver','viagens') }}
+    status,
+    fonte,
+    qtd_registros,
+    qtd_viagens_distintas,
+    qtd_passageiros_distintos,
+    qtd_motoristas_distintos,
+    preco_medio,
+    preco_total,
+    gold_process_ts,
+    hora,
+    ano,
+    mes,
+    dia
+from {{ source('urbanflow_gold', 'VIAGENS_RESUMO_HORA') }}
