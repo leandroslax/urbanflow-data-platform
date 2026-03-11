@@ -1,12 +1,10 @@
 version: 2
 
 sources:
-  - name: silver
+  - name: urbanflow_gold
     database: URBANFLOW
-    schema: SILVER
+    schema: GOLD
     tables:
-      - name: viagens
-      - name: gps
-      - name: incidentes
-      - name: clima
-      - name: trafego
+      - name: VIAGENS_RESUMO_HORA
+      - name: CLIMA_RESUMO_HORA
+      - name: TRAFEGO_RESUMO_HORA

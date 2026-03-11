@@ -1,9 +1,4 @@
-select
-  traffic_id,
-  city,
-  region,
-  congestion_index,
-  travel_time_seconds,
-  free_flow_time_seconds,
-  event_ts
-from {{ source('silver','trafego') }}
+{{ config(materialized='view') }}
+
+select *
+from {{ source('urbanflow_gold','TRAFEGO_RESUMO_HORA') }}
