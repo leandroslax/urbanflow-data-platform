@@ -12,8 +12,26 @@ Producer → Kafka / MSK → Spark Streaming → Data Lake (S3) → Snowflake �
 
 # Arquitetura da Plataforma
 
-![Arquitetura](architecture/mermaid-diagram.png)
+![Arquitetura](architecture/urbanflow-aws-architecture-diagram.png)
 
+## Fluxo do Pipeline
+
+```text
+Python Producer
+        ↓
+Kafka / MSK
+        ↓
+Spark Structured Streaming (PySpark)
+        ↓
+S3 Data Lake
+Bronze → Silver → Gold
+        ↓
+Snowflake
+        ↓
+dbt
+        ↓
+QuickSight
+```
 ## Camadas do Data Lake
 
 - **Bronze** → dados brutos vindos do streaming
@@ -31,18 +49,37 @@ flowchart LR
     G --> S3G[S3 Gold]
     S3G --> SN[Snowflake]
     SN --> BI[Dashboards BI]
-
 ```
 ## Stack Tecnológica
 
+### Linguagem
+- Python
+
+### Cloud
 - AWS
-- Kafka / MSK
-- Spark Structured Streaming
+
+### Streaming
+- Apache Kafka (Amazon MSK)
+
+### Processamento de Dados
+- Apache Spark Structured Streaming
+
+### Data Lake
 - Amazon S3
+
+### Data Warehouse
 - Snowflake
+
+### Transformação Analítica
 - dbt
+
+### Orquestração
 - Apache Airflow
+
+### Infraestrutura
 - Terraform
+
+### Business Intelligence
 - Amazon QuickSight
 
 ## Estrutura do Projeto
@@ -88,7 +125,6 @@ flowchart LR
 
 ### Bloco 8 — execução
 
-```markdown
 ## Execução da Plataforma
 
 1. Iniciar Producer
@@ -106,3 +142,4 @@ flowchart LR
 - medir impacto de clima no trânsito
 - monitorar incidentes urbanos
 - analisar tempo médio de viagens
+
