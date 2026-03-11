@@ -1,13 +1,13 @@
 #!/bin/bash
 set -euo pipefail
 
-BOOTSTRAP="${1:-}"
-CLIENT_PROPS="${2:-}"
+BOOTSTRAP="boot-mfuejbf1.c3.kafka-serverless.us-east-1.amazonaws.com:9098"
+CLIENT_PROPS="/home/ec2-user/urbanflow-data-platform/config/client_iam.properties"
 
 POOL2_JAR="/home/ec2-user/.ivy2/jars/org.apache.commons_commons-pool2-2.12.0.jar"
 MSK_IAM_JAR="/home/ec2-user/urbanflow-data-platform/jars/aws-msk-iam-auth-1.1.9-all.jar"
 
-~/spark/bin/spark-submit \
+exec /home/ec2-user/spark/bin/spark-submit \
   --packages \
 org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.1,\
 org.apache.kafka:kafka-clients:3.5.1,\

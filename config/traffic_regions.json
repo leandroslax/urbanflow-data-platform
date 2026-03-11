@@ -1,0 +1,7 @@
+[
+  {"city":"São Paulo","region_id":"sp-centro","label":"Centro","lat":-23.550520,"lon":-46.633308},
+  {"city":"São Paulo","region_id":"sp-paulista","label":"Av. Paulista","lat":-23.561414,"lon":-46.655881},
+  {"city":"São Paulo","region_id":"sp-pinheiros","label":"Pinheiros","lat":-23.567300,"lon":-46.701900},
+  {"city":"São Paulo","region_id":"sp-itaim","label":"Itaim Bibi","lat":-23.584900,"lon":-46.679500},
+  {"city":"São Paulo","region_id":"sp-santo-amaro","label":"Santo Amaro","lat":-23.654300,"lon":-46.709900}
+]

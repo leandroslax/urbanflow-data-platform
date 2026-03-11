@@ -1,32 +1,49 @@
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import col, to_timestamp
+from pyspark.sql.functions import col, to_timestamp, year, month, dayofmonth, current_timestamp
 
-S3_BASE = "s3a://urbanflow-datalake-dev-us-east-1-139961319000/urbanflow"
+BUCKET = "s3a://urbanflow-datalake-dev-us-east-1-139961319000"
+BRONZE_PATH = f"{BUCKET}/urbanflow/bronze/viagens"
+SILVER_PATH = f"{BUCKET}/urbanflow/silver/viagens"
+CHECKPOINT_PATH = f"{BUCKET}/checkpoints/viagens_silver_v1"
 
 def main():
-    spark = SparkSession.builder.appName("urbanflow_silver_viagens").getOrCreate()
+    spark = (
+        SparkSession.builder
+        .appName("urbanflow-viagens-bronze-to-silver")
+        .getOrCreate()
+    )
 
-    bronze_path = f"{S3_BASE}/bronze/viagens"
-    silver_path = f"{S3_BASE}/silver/viagens"
+    spark.sparkContext.setLogLevel("WARN")
 
-    df = spark.read.parquet(bronze_path)
+    bronze_schema = spark.read.parquet(BRONZE_PATH).schema
 
-    # Normalização leve (ajuste conforme schema real)
-    if "ts" in df.columns:
-        df = df.withColumn("event_ts", to_timestamp(col("ts")))
+    df = (
+        spark.readStream
+        .format("parquet")
+        .schema(bronze_schema)
+        .load(BRONZE_PATH)
+    )
 
-    # Deduplicação
-    pk = "trip_id"
-    if pk in df.columns:
-        df = df.dropDuplicates([pk])
-    else:
-        df = df.dropDuplicates()
+    df_silver = (
+        df.withColumn("ts_evento", to_timestamp(col("ts_evento")))
+          .filter(col("ts_evento").isNotNull())
+          .withColumn("silver_process_ts", current_timestamp())
+          .withColumn("ano", year(col("ts_evento")))
+          .withColumn("mes", month(col("ts_evento")))
+          .withColumn("dia", dayofmonth(col("ts_evento")))
+    )
 
-    (df.write
-       .mode("append")
-       .parquet(silver_path))
+    query = (
+        df_silver.writeStream
+        .format("parquet")
+        .outputMode("append")
+        .option("path", SILVER_PATH)
+        .option("checkpointLocation", CHECKPOINT_PATH)
+        .partitionBy("ano", "mes", "dia")
+        .start()
+    )
 
-    spark.stop()
+    query.awaitTermination()
 
 if __name__ == "__main__":
     main()

@@ -1,32 +1,65 @@
-from pyspark.sql import SparkSession
-from pyspark.sql.functions import col, to_timestamp
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
-S3_BASE = "s3a://urbanflow-datalake-dev-us-east-1-139961319000/urbanflow"
+from pyspark.sql import SparkSession, functions as F
+
+BRONZE_PATH = "s3a://urbanflow-datalake-dev-us-east-1-139961319000/urbanflow/bronze/incidentes/"
+SILVER_PATH = "s3a://urbanflow-datalake-dev-us-east-1-139961319000/urbanflow/silver/incidentes_v1/"
+CHECKPOINT_PATH = "s3a://urbanflow-datalake-dev-us-east-1-139961319000/checkpoints/incidentes_silver_v1/"
 
 def main():
-    spark = SparkSession.builder.appName("urbanflow_silver_incidentes").getOrCreate()
+    spark = (
+        SparkSession.builder
+        .appName("urbanflow_silver_incidentes")
+        .config("spark.sql.shuffle.partitions", "8")
+        .config("spark.sql.adaptive.enabled", "false")
+        .getOrCreate()
+    )
 
-    bronze_path = f"{S3_BASE}/bronze/incidentes"
-    silver_path = f"{S3_BASE}/silver/incidentes"
+    spark.sparkContext.setLogLevel("WARN")
 
-    df = spark.read.parquet(bronze_path)
+    bronze_static = spark.read.format("parquet").load(BRONZE_PATH)
+    schema = bronze_static.schema
 
-    # Normalização leve (ajuste conforme schema real)
-    if "ts" in df.columns:
-        df = df.withColumn("event_ts", to_timestamp(col("ts")))
+    df = (
+        spark.readStream
+        .format("parquet")
+        .schema(schema)
+        .option("maxFilesPerTrigger", 50)
+        .load(BRONZE_PATH)
+    )
 
-    # Deduplicação
-    pk = "incident_id"
-    if pk in df.columns:
-        df = df.dropDuplicates([pk])
-    else:
-        df = df.dropDuplicates()
+    df = (
+        df.withColumn(
+            "event_ts_ref",
+            F.coalesce(
+                F.col("ts_evento_ts"),
+                F.to_timestamp(F.col("ts_evento")),
+                F.to_timestamp(F.col("ts_evento"), "yyyy-MM-dd HH:mm:ss"),
+                F.to_timestamp(F.col("ts_evento"), "yyyy-MM-dd'T'HH:mm:ss"),
+                F.to_timestamp(F.col("ts_evento"), "yyyy-MM-dd'T'HH:mm:ssX"),
+                F.to_timestamp(F.col("ts_evento"), "yyyy-MM-dd'T'HH:mm:ss.SSSX"),
+                F.current_timestamp()
+            )
+        )
+        .withColumn("dt_ref", F.to_date("event_ts_ref"))
+        .withColumn("hora_ref", F.hour("event_ts_ref"))
+        .dropDuplicates(["incidente_id", "event_ts_ref"])
+        .repartition(4, "dt_ref", "hora_ref")
+    )
 
-    (df.write
-       .mode("append")
-       .parquet(silver_path))
+    query = (
+        df.writeStream
+        .format("parquet")
+        .outputMode("append")
+        .option("path", SILVER_PATH)
+        .option("checkpointLocation", CHECKPOINT_PATH)
+        .partitionBy("dt_ref", "hora_ref")
+        .trigger(processingTime="30 seconds")
+        .start()
+    )
 
-    spark.stop()
+    query.awaitTermination()
 
 if __name__ == "__main__":
     main()

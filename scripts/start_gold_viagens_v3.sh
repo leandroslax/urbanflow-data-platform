@@ -1,0 +1,6 @@
+#!/bin/bash
+set -euo pipefail
+
+/home/ec2-user/spark/bin/spark-submit \
+--packages org.apache.hadoop:hadoop-aws:3.3.4,com.amazonaws:aws-java-sdk-bundle:1.12.262 \
+/home/ec2-user/urbanflow-data-platform/jobs/gold/stream_viagens_silver_v2_to_gold_v3.py

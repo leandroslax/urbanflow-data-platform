@@ -1,0 +1,11 @@
+#!/bin/bash
+
+export BOOTSTRAP="boot-mfuejbf1.c3.kafka-serverless.us-east-1.amazonaws.com:9098"
+
+cd ~/urbanflow-data-platform/apps/producers
+
+./urbanflow_producer.py \
+  --bootstrap "$BOOTSTRAP" \
+  --client-props ~/urbanflow-data-platform/config/client_iam.properties \
+  --modo misto \
+  --dias 30
