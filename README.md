@@ -14,6 +14,8 @@ Producer → Kafka / MSK → Spark Streaming → Data Lake (S3) → Snowflake �
 
 ![Arquitetura](architecture/urbanflow-aws-architecture-diagram.png)
 
+![UrbanFlow Architecture](architecture/mermaid-diagram.png)
+
 ## Fluxo do Pipeline
 
 ```text
