@@ -44,18 +44,6 @@ Amazon QuickSight
 - **Silver** → dados tratados e normalizados
 - **Gold** → datasets agregados para analytics
 
-```mermaid
-flowchart LR
-    P[UrbanFlow Producer] --> K[Kafka MSK]
-    K --> B[Spark Bronze Jobs]
-    B --> S3B[S3 Bronze]
-    S3B --> S[Spark Silver Jobs]
-    S --> S3S[S3 Silver]
-    S3S --> G[Spark Gold Jobs]
-    G --> S3G[S3 Gold]
-    S3G --> SN[Snowflake]
-    SN --> BI[Dashboards BI]
-```
 ## Stack Tecnológica
 
 Linguagens
