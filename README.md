@@ -25,6 +25,8 @@ flowchart LR
     G --> S3G[S3 Gold]
     S3G --> SN[Snowflake]
     SN --> BI[Dashboards BI]
+
+```
 Stack Tecnológica
 
 AWS
