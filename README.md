@@ -10,7 +10,7 @@ no Snowflake para consumo via dashboards no Amazon QuickSight.
 
 Pipeline principal:
 
-Producer → Kafka / MSK → Structured Streaming → Data Lake (S3) → Snowflake → dbt → Dashboards
+Producer → Kafka / MSK → Spark Structured Streaming → Data Lake (S3) → Snowflake → dbt → Dashboards
 
 ---
 
