@@ -1,16 +1,20 @@
-# UrbanFlow Data Platform
+# UrbanFlow — Real-Time Urban Mobility Data Platform
 
-Plataforma de **Engenharia de Dados para mobilidade urbana em tempo real**, baseada em **Streaming Data Platform + Lakehouse Architecture**.
+Plataforma de Engenharia de Dados para mobilidade urbana em tempo real,
+baseada em arquitetura Streaming + Lakehouse na AWS.
 
-O projeto simula eventos urbanos (viagens, GPS, incidentes, clima e tráfego), processa dados em streaming e disponibiliza datasets analíticos para BI.
+O projeto simula eventos urbanos (viagens, GPS, incidentes, clima e tráfego),
+processa dados em streaming com Apache Kafka e Spark Structured Streaming,
+armazena dados em um Data Lake no Amazon S3 e disponibiliza datasets analíticos
+no Snowflake para consumo via dashboards no Amazon QuickSight.
 
 Pipeline principal:
 
-Producer → Kafka / MSK → Spark Streaming → Data Lake (S3) → Snowflake → Dashboards
+Producer → Kafka / MSK → Structured Streaming → Data Lake (S3) → Snowflake → dbt → Dashboards
 
 ---
 
-# Arquitetura da Plataforma
+# Arquitetura da Plataforma de Dados
 
 ![Arquitetura](architecture/urbanflow-aws-architecture-diagram.png)
 
@@ -20,19 +24,19 @@ Producer → Kafka / MSK → Spark Streaming → Data Lake (S3) → Snowflake �
 
 ```text
 Python Producer
-        ↓
-Kafka / MSK
-        ↓
+↓
+Apache Kafka (Amazon MSK)
+↓
 Spark Structured Streaming (PySpark)
-        ↓
-S3 Data Lake
+↓
+Amazon S3 Data Lake
 Bronze → Silver → Gold
-        ↓
-Snowflake
-        ↓
-       dbt
-        ↓
-QuickSight
+↓
+Snowflake Data Warehouse
+↓
+dbt Transformations
+↓
+Amazon QuickSight
 ```
 ## Camadas do Data Lake
 
@@ -54,35 +58,36 @@ flowchart LR
 ```
 ## Stack Tecnológica
 
-### Linguagem
-- Python
+Linguagens
+• Python
+• SQL
 
-### Cloud
-- AWS
+Cloud
+• AWS
 
-### Streaming
-- Apache Kafka (Amazon MSK)
+Streaming
+• Apache Kafka (Amazon MSK)
 
-### Processamento de Dados
-- Apache Spark Structured Streaming
+Processamento
+• Apache Spark Structured Streaming
 
-### Data Lake
-- Amazon S3
+Data Lake
+• Amazon S3
 
-### Data Warehouse
-- Snowflake
+Data Warehouse
+• Snowflake
 
-### Transformação Analítica
-- dbt
+Transformação Analítica
+• dbt
 
-### Orquestração
-- Apache Airflow
+Orquestração
+• Apache Airflow
 
-### Infraestrutura
-- Terraform
+Business Intelligence
+• Amazon QuickSight
 
-### Business Intelligence
-- Amazon QuickSight
+Infraestrutura
+• Terraform
 
 ## Estrutura do Projeto
 
@@ -129,7 +134,7 @@ flowchart LR
 
 ## Execução da Plataforma
 
-1. Iniciar Producer
+1. Iniciar Python Producer
 2. Publicar eventos no Kafka
 3. Spark Streaming grava dados na camada Bronze
 4. Processos Silver tratam e padronizam os dados
@@ -139,7 +144,7 @@ flowchart LR
 
 ## Casos de Uso
 
-- identificar regiões com maior congestionamento
+- dentificar regiões com maior congestionamento urbano
 - analisar horários de pico
 - medir impacto de clima no trânsito
 - monitorar incidentes urbanos
