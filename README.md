@@ -10,7 +10,7 @@ Producer → Kafka / MSK → Spark Streaming → Data Lake (S3) → Snowflake �
 
 ## Arquitetura da Plataforma
 
-![UrbanFlow Architecture](architecture/urbanflow-aws-architecture-diagram.png)
+![mermaid-diagram](architecture/mermaid-diagram.png)
 
 ```mermaid
 flowchart LR
