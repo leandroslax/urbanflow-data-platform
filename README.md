@@ -14,6 +14,12 @@ Producer → Kafka / MSK → Spark Streaming → Data Lake (S3) → Snowflake �
 
 ![Arquitetura](architecture/mermaid-diagram.png)
 
+## Camadas do Data Lake
+
+- **Bronze** → dados brutos vindos do streaming
+- **Silver** → dados tratados e normalizados
+- **Gold** → datasets agregados para analytics
+
 ```mermaid
 flowchart LR
     P[UrbanFlow Producer] --> K[Kafka MSK]
@@ -29,20 +35,19 @@ flowchart LR
 ```
 ## Stack Tecnológica
 
-AWS
-Kafka / MSK
-Spark Structured Streaming
-Amazon S3
-Snowflake
-dbt
-Apache Airflow
-Terraform
-Amazon QuickSight
+- AWS
+- Kafka / MSK
+- Spark Structured Streaming
+- Amazon S3
+- Snowflake
+- dbt
+- Apache Airflow
+- Terraform
+- Amazon QuickSight
 
 ## Estrutura do Projeto
 
 ```text
-.
 ├── airflow
 │   └── dags
 │       └── urbanflow_silver_gold_dag.py
