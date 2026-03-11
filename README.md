@@ -30,7 +30,7 @@ Bronze → Silver → Gold
         ↓
 Snowflake
         ↓
-dbt
+       dbt
         ↓
 QuickSight
 ```
