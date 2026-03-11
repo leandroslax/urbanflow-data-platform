@@ -24,20 +24,6 @@ flowchart LR
     S3G --> SN[Snowflake]
     SN --> BI[Dashboards BI]
 
-```markdown
-## Streaming Topics
-
-```mermaid
-flowchart LR
-    P[Producer]
-
-    P --> V[topic urbanflow_viagens]
-    P --> G[topic urbanflow_gps]
-    P --> I[topic urbanflow_incidentes]
-    P --> C[topic urbanflow_clima]
-    P --> T[topic urbanflow_trafego]
-
----
 
 # 4️⃣ Pipeline Bronze → Silver → Gold
 
