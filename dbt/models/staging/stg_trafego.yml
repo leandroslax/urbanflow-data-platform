@@ -1,0 +1,5 @@
+version: 2
+
+models:
+  - name: stg_trafego
+    description: "Dados agregados de tráfego urbano"
