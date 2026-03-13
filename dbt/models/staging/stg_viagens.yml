@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: stg_viagens
+    description: "Dados de viagens processados da camada gold do UrbanFlow"
+
+    columns:
+
+      - name: gold_process_ts
+        description: "Timestamp de processamento da métrica"
+        tests:
+          - not_null
+
+      - name: qtd_viagens_distintas
+        description: "Quantidade de viagens distintas"
+        tests:
+          - not_null
+
+      - name: preco_total
+        description: "Faturamento total agregado"
+        tests:
+          - not_null
