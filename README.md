@@ -24,7 +24,7 @@ Producer → Kafka / MSK → Spark Structured Streaming → Data Lake (S3) → S
 
 # UrbanFlow Mobility Analytics Dashboard
 
-![UrbanFlow Dashboard](docs/images/urbanflow_dashboard.jpg)
+![UrbanFlow Dashboard](dashboard/docs/images/urbanflow_dashboard.jpg)
 
 Dashboard analítico construído para monitorar mobilidade urbana em tempo real
 utilizando datasets da camada Gold do Data Lake.
