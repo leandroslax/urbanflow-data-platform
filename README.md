@@ -26,8 +26,14 @@ Producer → Kafka / MSK → Spark Structured Streaming → Data Lake (S3) → S
 
 ![UrbanFlow Dashboard](dashboard/docs/images/urbanflow_dashboard.jpg)
 
-Dashboard analítico construído para monitorar mobilidade urbana em tempo real
-utilizando datasets da camada Gold do Data Lake.
+O projeto simula eventos urbanos (viagens, GPS, incidentes, clima e tráfego),
+processa dados em streaming com Apache Kafka e Spark Structured Streaming,
+armazena dados em um Data Lake no Amazon S3 e disponibiliza datasets analíticos
+no Snowflake para consumo via dashboards no Amazon QuickSight.
+
+Os componentes da plataforma são executados como services no host,
+garantindo processamento contínuo, reinício automático em caso de falha
+e operação em tempo real do pipeline de dados.
 
 Principais métricas exibidas:
 
@@ -95,8 +101,9 @@ Data Warehouse
 Transformação Analítica
 • dbt
 
-Orquestração
-• Apache Airflow
+Execução e Automação
+• systemd services
+• Shell scripts
 
 Business Intelligence
 • Amazon QuickSight
@@ -107,9 +114,7 @@ Infraestrutura
 ## Estrutura do Projeto
 
 ```text
-├── airflow
-│   └── dags
-│       └── urbanflow_silver_gold_dag.py
+
 ├── apps
 │   └── producers
 │       └── urbanflow_producer.py
@@ -149,14 +154,16 @@ Infraestrutura
 
 ## Execução da Plataforma
 
-1. Iniciar Python Producer
-2. Publicar eventos no Kafka
-3. Spark Structured Streaming grava dados na camada Bronze
-4. Processos Silver tratam e padronizam os dados
+A plataforma opera continuamente por meio de services configurados no host.
+
+1. O Producer publica eventos no Kafka (Amazon MSK)
+2. Jobs de ingestão Spark consomem eventos em streaming
+3. Dados são gravados no Amazon S3 na camada Bronze
+4. Processos Silver tratam e normalizam os dados
 5. Processos Gold geram datasets analíticos
-6. Snowflake consome dados do Data Lake
+6. Snowflake consome datasets analíticos do Data Lake
 7. dbt executa transformações analíticas no Data Warehouse
-8. QuickSight gera dashboards
+8. Amazon QuickSight consome os datasets para dashboards
 
 ## Casos de Uso
 
