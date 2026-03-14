@@ -77,6 +77,51 @@ Amazon QuickSight
 - **Silver** → dados tratados e normalizados
 - **Gold** → datasets agregados para analytics
 
+---
+
+# Modelagem Analítica com dbt
+
+As transformações analíticas são realizadas utilizando **dbt (Data Build Tool)** no Snowflake.
+
+Os dados agregados da camada **Gold** são utilizados como fontes para os modelos dbt,
+onde são organizados em camadas de **staging**, **intermediate** e **marts analíticos**.
+
+O diagrama abaixo representa a linhagem dos modelos dbt utilizados na plataforma.
+
+![dbt Lineage](dbt/docs/diagrama_dbt_urbanflow.png)
+
+### Estrutura de Modelos
+
+**Sources**
+
+Datasets agregados provenientes da camada Gold do Data Lake:
+
+- `VIAGENS_RESUMO_HORA`
+- `CLIMA_RESUMO_HORA`
+- `TRAFEGO_RESUMO_HORA`
+
+**Staging**
+
+Padronização e limpeza dos dados:
+
+- `stg_viagens`
+- `stg_clima`
+- `stg_trafego`
+
+**Intermediate**
+
+Enriquecimento de dados e integrações entre datasets:
+
+- `int_mobilidade_enriquecida`
+
+**Marts Analíticos**
+
+Datasets finais utilizados para análise e dashboards:
+
+- `mart_mobilidade_diaria`
+- `mart_congestionamento_por_hora`
+- `mart_tempo_medio_viagem`
+
 ## Stack Tecnológica
 
 Linguagens
@@ -136,7 +181,7 @@ Infraestrutura
 ├── dbt
 │   ├── dbt_project.yml
 │   ├── docs
-│   │   └── dbt_lineage.png.jpg
+│   │   └── diagrama_dbt_urbanflow.png
 │   ├── models
 │   │   ├── intermediate
 │   │   │   └── int_mobilidade_enriquecida.sql
