@@ -116,38 +116,137 @@ Infraestrutura
 ```text
 
 ├── apps
-│   └── producers
-│       └── urbanflow_producer.py
+│   └── producers
+│       └── urbanflow_producer.py
 ├── architecture
-│   ├── mermaid-diagram.png
-│   ├── urbanflow-aws-architecture-diagram.png
-│   ├── urbanflow-data-platform-architecture.md
-│   └── urbanflow-kafka-producer-topics-diagram.png
+│   ├── mermaid-diagram.png
+│   ├── urbanflow-aws-architecture-diagram.png
+│   ├── urbanflow-data-platform-architecture.md
+│   └── urbanflow-kafka-producer-topics-diagram.png
 ├── config
-│   ├── client_iam.properties
-│   └── traffic_regions.json
+│   ├── client_iam.properties
+│   └── traffic_regions.json
+├── dashboard
+│   ├── app.py
+│   └── docs
+│       └── images
+│           └── urbanflow_dashboard.jpg
 ├── data
-│   └── simulator
+│   └── simulator
 ├── dbt
-│   ├── dbt_project.yml
-│   └── models
-│       ├── intermediate
-│       ├── marts
-│       └── staging
+│   ├── dbt_project.yml
+│   ├── docs
+│   │   └── dbt_lineage.png.jpg
+│   ├── models
+│   │   ├── intermediate
+│   │   │   └── int_mobilidade_enriquecida.sql
+│   │   ├── marts
+│   │   │   ├── mart_congestionamento_por_hora.sql
+│   │   │   ├── mart_mobilidade_diaria.sql
+│   │   │   └── mart_tempo_medio_viagem.sql
+│   │   └── staging
+│   │       ├── sources.yml
+│   │       ├── stg_clima.sql
+│   │       ├── stg_clima.yml
+│   │       ├── stg_trafego.sql
+│   │       ├── stg_trafego.yml
+│   │       ├── stg_viagens.sql
+│   │       └── stg_viagens.yml
+│   └── profiles.yml
 ├── docs
-│   ├── architecture
-│   └── data_contracts
+│   ├── architecture
+│   └── data_contracts
 ├── infra
-│   └── terraform
+│   └── terraform
+│       ├── envs
+│       │   ├── dev
+│       │   │   ├── main.tf
+│       │   │   ├── msk.tf
+│       │   │   ├── outputs.tf
+│       │   │   ├── provider.tf
+│       │   │   ├── terraform.tfvars
+│       │   │   ├── terraform.tfvars.example
+│       │   │   ├── urbanflow-s3-access.json
+│       │   │   ├── variables.tf
+│       │   │   └── versions.tf
+│       │   ├── hml
+│       │   └── prod
+│       └── modules
 ├── jobs
-│   ├── bronze
-│   ├── silver
-│   └── gold
+│   ├── bronze
+│   │   ├── stream_clima_to_s3_bronze.py
+│   │   ├── stream_gps_to_s3_bronze.py
+│   │   ├── stream_incidentes_to_s3_bronze.py
+│   │   ├── stream_trafego_to_s3_bronze.py
+│   │   └── stream_viagens_to_s3_bronze.py
+│   ├── gold
+│   │   ├── build_clima_gold_resumo_hora.py
+│   │   ├── build_gps_gold_resumo_hora.py
+│   │   ├── build_incidentes_gold_resumo_hora.py
+│   │   ├── build_trafego_gold_resumo_hora.py
+│   │   ├── build_viagens_gold_resumo_hora.py
+│   │   ├── stream_clima_silver_to_gold.py
+│   │   ├── stream_gps_silver_to_gold.py
+│   │   ├── stream_incidentes_silver_to_gold.py
+│   │   ├── stream_trafego_silver_to_gold.py
+│   │   └── stream_viagens_silver_to_gold.py
+│   └── silver
+│       ├── build_gps_bronze_to_silver.py
+│       ├── stream_clima_bronze_to_silver.py
+│       ├── stream_gps_bronze_to_silver.py
+│       ├── stream_incidentes_bronze_to_silver.py
+│       ├── stream_trafego_bronze_to_silver.py
+│       └── stream_viagens_bronze_to_silver.py
 ├── kafka
-│   ├── schemas
-│   └── topics
+│   ├── schemas
+│   └── topics
+├── README.md
 ├── scripts
+│   ├── check_urbanflow.sh
+│   ├── start_bronze_clima.sh
+│   ├── start_bronze_gps.sh
+│   ├── start_bronze_incidentes.sh
+│   ├── start_bronze_trafego.sh
+│   ├── start_bronze_viagens.sh
+│   ├── start_clima_silver.sh
+│   ├── start_gold_clima_batch.sh
+│   ├── start_gold_clima.sh
+│   ├── start_gold_gps_batch.sh
+│   ├── start_gold_gps.sh
+│   ├── start_gold_incidentes_batch.sh
+│   ├── start_gold_incidentes.sh
+│   ├── start_gold_trafego_batch.sh
+│   ├── start_gold_trafego.sh
+│   ├── start_gold_viagens_batch.sh
+│   ├── start_gold_viagens.sh
+│   ├── start_gps_silver.sh
+│   ├── start_producer.sh
+│   ├── start_silver_clima.sh
+│   ├── start_silver_gps_batch.sh
+│   ├── start_silver_gps.sh
+│   ├── start_silver_incidentes.sh
+│   ├── start_silver_trafego.sh
+│   ├── start_silver_viagens.sh
+│   └── start_trafego_silver.sh
 └── snowflake
+    ├── 00_bootstrap
+    │   ├── 001_create_warehouse.sql
+    │   ├── 002_create_database.sql
+    │   └── 003_create_schemas.sql
+    ├── 20_integrations
+    │   ├── 001_storage_integration.sql
+    │   └── 002_external_stage.sql
+    ├── 30_landing_raw
+    │   ├── 001_create_viagens_resumo_hora.sql
+    │   ├── 002_create_clima_resumo_hora.sql
+    │   ├── 003_create_gps_mobilidade_hora.sql
+    │   ├── 004_create_incidentes_resumo_hora.sql
+    │   └── 005_create_trafego_resumo_hora.sql
+    ├── 40_loading
+    │   └── 001_copy_viagens_resumo_hora.sql
+    └── 50_marts
+        ├── 001_create_mart_viagens_diarias.sql
+        └── 002_validation_queries.sql
 ```
 
 ### Bloco 8 — execução
