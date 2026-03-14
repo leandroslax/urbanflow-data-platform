@@ -20,6 +20,33 @@ Producer → Kafka / MSK → Spark Structured Streaming → Data Lake (S3) → S
 
 ![UrbanFlow Architecture](architecture/mermaid-diagram.png)
 
+---
+
+# UrbanFlow Mobility Analytics Dashboard
+
+![UrbanFlow Dashboard](docs/images/urbanflow_dashboard.jpg)
+
+Dashboard analítico construído para monitorar mobilidade urbana em tempo real
+utilizando datasets da camada Gold do Data Lake.
+
+Principais métricas exibidas:
+
+• Total de viagens  
+• Faturamento total  
+• Ticket médio por corrida  
+• Temperatura média  
+• Evolução diária de viagens  
+• Evolução diária de faturamento  
+• Impacto das condições climáticas  
+• Índice de tráfego urbano  
+• Distribuição geográfica das corridas  
+• Top regiões com maior volume de viagens  
+
+Os dados são gerados pelo pipeline de streaming e processados pelas camadas
+Bronze, Silver e Gold antes de serem disponibilizados no Snowflake e consumidos
+pelo Amazon QuickSight.
+
+
 ## Fluxo do Pipeline
 
 ```text
