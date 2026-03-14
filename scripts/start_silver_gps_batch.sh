@@ -15,7 +15,7 @@ do
     --conf spark.sql.shuffle.partitions=8 \
     --conf spark.sql.adaptive.enabled=false \
     --packages org.apache.hadoop:hadoop-aws:3.3.4,com.amazonaws:aws-java-sdk-bundle:1.12.262 \
-    /home/ec2-user/urbanflow-data-platform/jobs/silver/build_gps_bronze_to_silver_v4.py >> "$LOG_FILE" 2>&1
+    /home/ec2-user/urbanflow-data-platform/jobs/silver/build_gps_bronze_to_silver.py >> "$LOG_FILE" 2>&1
 
   echo "[SILVER-GPS-V4] $(date '+%F %T') rebuild concluído. Aguardando 300 segundos..." >> "$LOG_FILE"
   sleep 300
